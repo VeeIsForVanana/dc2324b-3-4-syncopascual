@@ -31,4 +31,5 @@ Edit the contents of `src/lib/index.js` and implement a factory function that re
 1. The custom store must have a `decrementFontSize` method that decrements the `fontSize` property by `4`.
 1. The custom store must have a `reset` method that resets the current value in the custom store back to its default value (as provided by the arguments to the factory function).
 
-[!IMPORTANT] You will only need to edit `src/lib/index.js` for this part. However, feel free to create an additional component that you can import to `src/routes/+page.svelte` for testing your custom store. 
+> [!IMPORTANT] 
+> You will only need to edit `src/lib/index.js` for this part. However, feel free to create an additional component that you can import to `src/routes/+page.svelte` for testing your custom store. 
