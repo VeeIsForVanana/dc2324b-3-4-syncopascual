@@ -6,6 +6,6 @@ export default defineConfig({
 	test: {
 		include: ['src/routes/*.test.js', 'src/lib/*.test.js'],
         globals: true,
-        environment: 'jsdom',
+        environment: 'happy-dom',
 	}
 });
