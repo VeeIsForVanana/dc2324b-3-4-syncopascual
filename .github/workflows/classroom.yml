@@ -1,0 +1,91 @@
+name: Autograding Tests
+'on':
+- push
+- workflow_dispatch
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Defaults
+      id: defaults
+      uses: education/autograding-command-grader@v1
+      with:
+        test-name: Defaults
+        setup-command: npm install
+        command: npm test default
+        timeout: 5
+        max-score: 10
+    - name: Wonky Button with Props
+      id: wonky-button-with-props
+      uses: education/autograding-command-grader@v1
+      with:
+        test-name: Wonky Button with Props
+        setup-command: npm install
+        command: npm test props
+        timeout: 5
+        max-score: 5
+    - name: Fizz Wonk
+      id: fizz-wonk
+      uses: education/autograding-command-grader@v1
+      with:
+        test-name: Fizz Wonk
+        setup-command: npm install
+        command: npm test fizz
+        timeout: 5
+        max-score: 10
+    - name: Buzz Wonk
+      id: buzz-wonk
+      uses: education/autograding-command-grader@v1
+      with:
+        test-name: Buzz Wonk
+        setup-command: npm install
+        command: npm test buzz
+        timeout: 5
+        max-score: 10
+    - name: Fizzbuzz Wonk
+      id: fizzbuzz-wonk
+      uses: education/autograding-command-grader@v1
+      with:
+        test-name: Fizzbuzz Wonk
+        setup-command: npm install
+        command: npm test fizzbuzz
+        timeout: 5
+        max-score: 10
+    - name: Dark Mode
+      id: dark-mode
+      uses: education/autograding-command-grader@v1
+      with:
+        test-name: Dark Mode
+        setup-command: npm install
+        command: npm test darkMode
+        timeout: 5
+        max-score: 25
+    - name: Font Size
+      id: font-size
+      uses: education/autograding-command-grader@v1
+      with:
+        test-name: Font Size
+        setup-command: npm install
+        command: npm test fontSize
+        timeout: 5
+        max-score: 30
+    - name: Autograding Reporter
+      uses: education/autograding-grading-reporter@v1
+      env:
+        DEFAULTS_RESULTS: "${{steps.defaults.outputs.result}}"
+        WONKY-BUTTON-WITH-PROPS_RESULTS: "${{steps.wonky-button-with-props.outputs.result}}"
+        FIZZ-WONK_RESULTS: "${{steps.fizz-wonk.outputs.result}}"
+        BUZZ-WONK_RESULTS: "${{steps.buzz-wonk.outputs.result}}"
+        FIZZBUZZ-WONK_RESULTS: "${{steps.fizzbuzz-wonk.outputs.result}}"
+        DARK-MODE_RESULTS: "${{steps.dark-mode.outputs.result}}"
+        FONT-SIZE_RESULTS: "${{steps.font-size.outputs.result}}"
+      with:
+        runners: defaults,wonky-button-with-props,fizz-wonk,buzz-wonk,fizzbuzz-wonk,dark-mode,font-size
