@@ -1,3 +1,4 @@
+import { writable } from 'svelte/store';
 /**
  * @template T
  * @typedef {import('svelte/store').Writable<T>} Writable
@@ -23,5 +24,17 @@
  * @returns {SettingsStore}
  */
 export default function(state) {
-    throw new Error('not yet implemented');
+    const { subscribe, set, update } = writable(state);
+    const original = {
+        darkMode: state.darkMode,
+        fontSize: state.fontSize
+    }
+    
+    return {
+        subscribe,
+        toggleDarkMode: () => update((state) => {state.darkMode = !state.darkMode; return state}),
+        incrementFontSize: () => update((state) => {state.fontSize += 4; return state}),
+        decrementFontSize: () => update((state) => {state.fontSize -= 4; return state}),
+        reset: () => set(original)
+    }
 }
